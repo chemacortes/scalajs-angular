@@ -1,10 +1,9 @@
 package com.greencatsoft.angularjs.core
 
+import com.greencatsoft.angularjs.{ Factory, ServiceDefinition, injectable }
 import scala.scalajs.js
-import scala.scalajs.js.UndefOr
 import scala.scalajs.js.annotation.JSBracketAccess
-
-import com.greencatsoft.angularjs.injectable
+import scala.scalajs.js.{ Dictionary, UndefOr, | }
 
 @js.native
 @injectable("$routeParams")
@@ -31,30 +30,30 @@ trait Route extends js.Object {
 
   var title: UndefOr[String] = js.native
 
-  var template: UndefOr[String] = js.native
+  var template: UndefOr[String | js.Function1[RouteParams, String]] = js.native
 
-  var templateUrl: UndefOr[String] = js.native
+  var templateUrl: UndefOr[String | js.Function1[RouteParams, String]] = js.native
 
   var controller: UndefOr[String] = js.native
 
   var redirectTo: UndefOr[String] = js.native
 
-  var resolve: js.Dictionary[js.Function0[_]] = js.native
+  var resolve: Dictionary[js.Function0[_] | ServiceDefinition[Factory[_]]] = js.native
 }
 
 object Route {
 
-  def apply(templateUrl: String): Route =
+  def apply(templateUrl: String | js.Function1[RouteParams, String]): Route =
     apply(templateUrl, None, None, None)
 
-  def apply(templateUrl: String, title: String): Route =
+  def apply(templateUrl: String | js.Function1[RouteParams, String], title: String): Route =
     apply(templateUrl, Some(title), None, None)
 
-  def apply(templateUrl: String, title: String, controller: String): Route =
+  def apply(templateUrl: String | js.Function1[RouteParams, String], title: String, controller: String): Route =
     apply(templateUrl, Some(title), Some(controller), None)
 
   def apply(
-    templateUrl: String, title: Option[String], controller: Option[String], redirectTo: Option[String]): Route = {
+    templateUrl: String | js.Function1[RouteParams, String], title: Option[String], controller: Option[String], redirectTo: Option[String]): Route = {
     require(templateUrl != null, "Missing argument 'templateUrl'.")
     require(title != null, "Missing argument 'title'.")
     require(controller != null, "Missing argument 'controller'.")
@@ -95,12 +94,12 @@ class RouteBuilder {
     this
   }
 
-  def template(template: String): RouteBuilder = {
+  def template(template: String | js.Function1[RouteParams, String]): RouteBuilder = {
     route.template = template
     this
   }
 
-  def templateUrl(templateUrl: String): RouteBuilder = {
+  def templateUrl(templateUrl: String | js.Function1[RouteParams, String]): RouteBuilder = {
     route.templateUrl = templateUrl
     this
   }
@@ -115,7 +114,7 @@ class RouteBuilder {
     this
   }
 
-  def resolve(dependencies: js.Dictionary[js.Function0[_]]): RouteBuilder = {
+  def resolve(dependencies: Dictionary[js.Function0[_] | ServiceDefinition[Factory[_]]]): RouteBuilder = {
     route.resolve = dependencies
     this
   }

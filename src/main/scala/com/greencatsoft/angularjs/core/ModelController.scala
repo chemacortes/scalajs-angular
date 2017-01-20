@@ -4,11 +4,13 @@ import scala.scalajs.js
 import scala.scalajs.js.UndefOr
 
 @js.native
-trait ModelController extends js.Object {
+trait ModelController[A] extends js.Object {
 
   var $viewValue: UndefOr[String] = js.native
 
-  var $modelValue: js.Any = js.native
+  var $modelValue: UndefOr[A] = js.native
+
+  var $setViewValue: js.Function1[UndefOr[A], Unit] = js.native
 
   var $parsers: js.Array[js.Function] = js.native
 
@@ -21,6 +23,8 @@ trait ModelController extends js.Object {
   def $setValidity(validationErrorKey: String, isValid: Boolean): Unit = js.native
 
   var $viewChangeListeners: js.Array[js.Function] = js.native
+
+  var $render: js.Function0[Unit] = js.native
 
   var $error: js.Dictionary[js.Any] = js.native
 

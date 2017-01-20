@@ -1,8 +1,8 @@
 package com.greencatsoft.angularjs.core
 
-import scala.scalajs.js
+import com.greencatsoft.angularjs.injectable
 
-import com.greencatsoft.angularjs.{ Service, injectable }
+import scala.scalajs.js
 
 @js.native
 @injectable("$scope")
@@ -28,7 +28,7 @@ trait Scope extends js.Object {
 
   def $on(name: String, listener: js.Function): js.Function0[Unit] = js.native
 
-  def $watch(watchExpression: js.Any, listener: js.Any = null, objectEquality: Boolean = false): js.Function = js.native
+  def $watch(watchExpression: js.Any, listener: js.Any = null, objectEquality: Boolean = false): js.Function0[Unit] = js.native
 
   def $watchCollection(obj: js.Any, listener: js.Function): js.Function = js.native
 }
@@ -38,7 +38,6 @@ trait Scope extends js.Object {
 trait RootScope extends Scope
 
 trait ScopeOps {
-  this: Service =>
 
   implicit class DynamicScope(scope: Scope) {
 

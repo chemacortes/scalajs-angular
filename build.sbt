@@ -4,13 +4,15 @@ lazy val scalaJsAngular = (project in file(".")).
     name := "scalajs-angular",
     description := "AngularJS bindings for Scala.js.",
     organization := "com.greencatsoft",
-    version := "0.7-SNAPSHOT",
-    scalaVersion := "2.11.7",
+    version := "0.8-SNAPSHOT",
+    scalaVersion := "2.11.8",
+    crossScalaVersions := Seq("2.11.8", "2.12.1"),
     scalacOptions ++= Seq("-feature","-deprecation"),
     homepage := Some(url("http://github.com/greencatsoft/scalajs-angular")),
 
     libraryDependencies ++= Seq(
-      "org.scala-js" %%% "scalajs-dom" % "0.8.2",
+      "org.scala-js" %%% "scalajs-dom" % "0.9.1",
+      "be.doeraene" %%% "scalajs-jquery" % "0.9.1",
       "org.scala-lang" % "scala-reflect" % scalaVersion.value % "compile"
     ),
 
@@ -26,7 +28,7 @@ lazy val scalaJsAngular = (project in file(".")).
 
     pomIncludeRepository := { _ => false },
 
-    pomExtra := (
+    pomExtra :=
       <licenses>
         <license>
           <name>Apache License 2.0</name>
@@ -83,6 +85,25 @@ lazy val scalaJsAngular = (project in file(".")).
           <name>Tomas Zeman</name>
           <url>https://github.com/tzeman77</url>
         </contributor>
+        <contributor>
+          <name>Sven Wiegand</name>
+          <url>http://www.sven-wiegand.de</url>
+        </contributor>
+        <contributor>
+          <name>Akos Vandra</name>
+          <url>https://github.com/axos88</url>
+        </contributor>
+        <contributor>
+          <name>Dominik Winter</name>
+          <url>https://github.com/0x7fh</url>
+        </contributor>
+        <contributor>
+          <name>Thorbenheins</name>
+          <url>https://github.com/thorbenheins</url>
+        </contributor>
+        <contributor>
+          <name>Reid Spencer</name>
+          <url>https://github.com/reid-spencer</url>
+        </contributor>
       </contributors>
-    )
   )

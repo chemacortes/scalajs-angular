@@ -1,10 +1,10 @@
 package com.greencatsoft.angularjs.extensions
 
+import com.greencatsoft.angularjs.core.Promise
+import com.greencatsoft.angularjs.injectable
+
 import scala.scalajs.js
 import scala.scalajs.js.{ Dictionary, UndefOr, | }
-
-import com.greencatsoft.angularjs.injectable
-import com.greencatsoft.angularjs.core.Promise
 
 @js.native
 @injectable("$translate")
@@ -40,6 +40,10 @@ trait Translate extends js.Object {
 
   def nestedObjectDelimeter(): String = js.native
 
+  def negotiateLocale(): UndefOr[String] = js.native
+
+  def negotiateLocale(langKey: String): UndefOr[String] = js.native
+
   def fallbackLanguage(): String | js.Array[String] = js.native
 
   def fallbackLanguage(langKey: String | js.Array[String]): Translate = js.native
@@ -61,6 +65,8 @@ trait Translate extends js.Object {
   def isPostCompilingEnabled(): Boolean = js.native
 
   def isForceAsyncReloadEnabled(): Boolean = js.native
+
+  def resolveClientLocale(): UndefOr[String] = js.native
 
   def refresh(langKey: String): Promise[Unit] = js.native
 
@@ -180,6 +186,8 @@ trait TranslateProvider extends js.Object {
   def determinePreferredLanguage(): TranslateProvider = js.native
 
   def determinePreferredLanguage(fn: js.Function0[String]): TranslateProvider = js.native
+
+  def resolveClientLocale(): UndefOr[String] = js.native
 
   def registerAvailableLanguageKeys(): js.Array[String] = js.native
 

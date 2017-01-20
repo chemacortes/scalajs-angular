@@ -1,28 +1,23 @@
 package com.greencatsoft.angularjs
 
-import scala.language.experimental.macros
-import scala.scalajs.js
-
 import com.greencatsoft.angularjs.core.{ Scope, ScopeOps }
-import com.greencatsoft.angularjs.internal.ServiceProxy
+
+import scala.scalajs.js
 
 trait Controller[A <: Scope] extends Service with ScopeOps {
 
   def scope: A
 
+  /** Name to bind the controller to (instead of the default name of `controller`). */
+  def controllerAs: Option[String] = None
+
   abstract override def initialize() {
     assert(scope != null, "Property 'scope' should not be null.")
 
     super.initialize()
-    scope.dynamic.controller = this.asInstanceOf[js.Object]
+    scope.dynamic.updateDynamic(controllerAs.getOrElse("controller"))(this.asInstanceOf[js.Object])
   }
 }
 
-object Controller {
-
-  def proxy[A <: Controller[_]]: js.Any = macro ServiceProxy.newClassWrapper[A]
-
-  def proxy[A <: Controller[_]](target: A): js.Any = macro ServiceProxy.newObjectWrapper[A]
-}
-
-abstract class AbstractController[A <: Scope](override val scope: A) extends Controller[A]
+abstract class AbstractController[A <: Scope](override val scope: A, override val controllerAs: Option[String] = None)
+  extends Controller[A]
